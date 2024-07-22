@@ -1,6 +1,6 @@
 # Stable Diffusion API Documentation
 
-Welcome to the Stable Diffusion API, provided by Qura. This API allows you to integrate image generation capabilities directly into your applications through a WebSocket interface. The goal is to provide a simple yet powerful way for users to leverage the Stable Diffusion model to generate images based on textual prompts. Note that the API is running on limited count of GPUs, so please be mindful of the number of requests you make and understand that there may be times when the service is fully utilized.
+Welcome to the Stable Diffusion API, provided by Qura. This API allows you to integrate image generation capabilities directly into your applications through a WebSocket interface. The goal is to provide a simple yet powerful way for users to leverage the Stable Diffusion model to generate images based on textual prompts. Note that the API runs on a limited number of GPUs, so please be mindful of the number of requests you make and understand that there may be times when the service is fully utilized.
 
 ## API Overview
 
@@ -10,7 +10,7 @@ Welcome to the Stable Diffusion API, provided by Qura. This API allows you to in
 
 ### Authentication
 
-The API requires a valid API key to authenticate requests. You have been provided with an API key for your use. Please include the API key in the `Authorization` header of your WebSocket connection request as follows:
+The API requires a valid API key to authenticate requests. Please include the API key in the `Authorization` header of your WebSocket connection request as follows:
 
 ```bash
 Authorization: Bearer <API_KEY>
@@ -40,36 +40,25 @@ Responses from the API are also JSON objects, which include:
 - **completed** (`boolean`): Shows whether the image generation is complete.
 - **request** (`object`): Echoes the request sent to the API.
 
-### Example Usage
+## Error Handling
 
-#### Request
-```json
-{
-    "prompt": "A beautiful sunset over the ocean."
-}
-```
+The API may return several types of errors. It is important to handle these errors gracefully in your application. The following table lists potential errors and their causes:
 
-#### Response
-```json
-{
-    "image": "base64-encoded-image-string",
-    "step": 100,
-    "completed": true,
-    "request": {
-        "prompt": "A beautiful sunset over the ocean.",
-        "image_size": [512, 512],
-        "steps": 100,
-        "guidance_scale": 0.5
-    }
-}
-```
+| WebSocket Close Code | API Error Code | Description |
+|----------------------|----------------|-------------|
+| 1000                 | 200            | Normal closure after successful image generation. |
+| 1003                 | 400            | Invalid request format or invalid JSON. |
+| 3000                 | 403            | Unauthorized access due to missing or invalid API key. |
+| 3003                 | 404            | Invalid endpoint path. |
+| 1011                 | 1011           | Internal server error. |
+| 1013                 | 503            | Service unavailable; all GPUs are in use or GPU had to be offloaded. |
+| 3008                 | 408            | Request timed out; image generation took too long. |
 
-## Additional Information
+### Additional Information
 - **Connection Handling:** Ensure your client maintains an active WebSocket connection to handle real-time data exchange.
-- **Error Handling:** Properly handle errors such as connection timeouts, malformed requests, and service availability.
 - **Security:** Utilize secure coding practices to protect the data and privacy of users.
-
 
 ## Problems
 
 If you encounter any issues or have questions about the API, please contact Kevin at kevin@qura.law.
+
