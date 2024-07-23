@@ -6,10 +6,14 @@
 
 ### Authentication
 
-`Authorization` header is required to connect. Specify it as a bearer token:
+Authentication is required and can either be passed as a `Authorization` header as follows:
 
 ```bash
 Authorization: Bearer <API_KEY>
+```
+Or as a parameter as follows:
+```bash
+wss://stable-diffusion.qura.law/generate?token=<API_KEY>
 ```
 
 ### Flow
