@@ -60,9 +60,7 @@ websocat -E wss://stable-diffusion.qura.law/generate -H "Authorization: Bearer <
 #### Send a request
 
 ```json
-{
-    "prompt": "A beautiful sunset over a calm lake with a small island in the middle."
-}
+{"prompt": "A beautiful sunset over a calm lake with a small island in the middle."}
 ```
 
 ## Problems
